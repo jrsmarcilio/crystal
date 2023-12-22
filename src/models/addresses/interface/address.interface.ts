@@ -1,5 +1,5 @@
 export type Address = {
-  id: number;
+  id: string;
   street: string;
   number: string;
   complement: string;
@@ -8,4 +8,6 @@ export type Address = {
   state: string;
   country: string;
   zipcode: string;
+  latitude: string;
+  longitude: string;
 };

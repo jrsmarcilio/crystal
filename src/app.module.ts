@@ -5,9 +5,11 @@ import { AppService } from './app.service';
 import { mysqlConfig, serverConfig } from './config/configuration';
 import { UserModule } from './models/users/user.module';
 import { MysqlDatabaseProviderModule } from './providers/database/mysql/MysqlDatabaseProviderModule';
+import { AddressesModule } from './models/addresses/addresses.module';
 
 @Module({
   imports: [
+    AddressesModule,
     UserModule,
     MysqlDatabaseProviderModule,
     ConfigModule.forRoot({
@@ -18,4 +20,4 @@ import { MysqlDatabaseProviderModule } from './providers/database/mysql/MysqlDat
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
