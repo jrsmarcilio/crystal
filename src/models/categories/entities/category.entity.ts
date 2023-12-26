@@ -4,8 +4,8 @@ import { Category } from '../interface/category.interface';
 
 @Entity('categories')
 export class CategoryEntity implements Category {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ length: 100 })
   name: string;

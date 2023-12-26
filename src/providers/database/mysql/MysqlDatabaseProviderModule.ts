@@ -31,6 +31,7 @@ import { DatabaseType } from 'typeorm';
           RoleEntity,
           UserSettingsEntity,
           AppointmentEntity,
+          CategoryEntity
         ],
       }),
       inject: [ConfigService],

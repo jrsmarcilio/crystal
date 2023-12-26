@@ -6,11 +6,13 @@ import { mysqlConfig, serverConfig } from './config/configuration';
 import { UserModule } from './models/users/user.module';
 import { MysqlDatabaseProviderModule } from './providers/database/mysql/MysqlDatabaseProviderModule';
 import { AddressesModule } from './models/addresses/addresses.module';
+import { CategoryModule } from './models/categories/category.module';
 
 @Module({
   imports: [
     AddressesModule,
     UserModule,
+    CategoryModule,
     MysqlDatabaseProviderModule,
     ConfigModule.forRoot({
       envFilePath: ['.env'],
