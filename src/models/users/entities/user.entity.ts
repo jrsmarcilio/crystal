@@ -3,50 +3,54 @@ import { RoleEntity } from 'src/models/roles/entities/roles.entity';
 import { UserSettingsEntity } from 'src/models/user_settings/entities/userSettings.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm';
 import { User } from '../interfaces/user.interface';
 
 @Entity('users')
 export class UserEntity implements User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({ length: 50 })
-  first_name: string;
+  @Column({ length: 100, nullable: false })
+  name: string;
 
-  @Column({ length: 50 })
-  last_name: string;
-
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: false, unique: true })
   email: string;
 
-  @Column({ length: 20 })
-  mobile_number: string;
+  @Column({ length: 100, nullable: true })
+  picture: string;
 
-  @Column({ length: 20 })
-  phone_number: string;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  birthday: string;
 
-  @Column({ length: 255 })
-  notes: string;
+  @Column({ length: 100, nullable: false })
+  phone: string;
 
-  @Column({ length: 50 })
-  timezone: string;
+  @Column({ type: 'boolean', default: false })
+  blocked: boolean;
 
-  @Column({ length: 50 })
-  language: string;
+  @Column({ type: 'boolean', default: false })
+  deleted: boolean;
 
-  @OneToMany(() => AddressEntity, (address) => address.user)
-  addresses: AddressEntity[];
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @OneToMany(() => RoleEntity, (role) => role.user)
-  roles: RoleEntity[];
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-  @OneToOne(() => UserSettingsEntity)
-  @JoinColumn()
+  @OneToOne(() => AddressEntity, (address) => address.id)
+  @JoinColumn({ name: 'addressId' })
+  address: AddressEntity;
+
+  @OneToOne(() => RoleEntity, (role) => role.user)
+  role: RoleEntity;
+
+  @OneToOne(() => UserSettingsEntity, (userSettings) => userSettings.user)
   settings: UserSettingsEntity;
 }

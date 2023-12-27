@@ -10,13 +10,13 @@ import { Service } from '../interface/service.interface';
 
 @Entity('services')
 export class ServiceEntity implements Service {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ length: 100 })
   name: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 255 })
   description: string;
 
   @Column({ precision: 6, scale: 2, default: 0 })
@@ -28,8 +28,8 @@ export class ServiceEntity implements Service {
   @Column({ default: 60 })
   duration: number;
 
-  @Column({ length: 100 })
-  availableType: string;
+  @Column({ default: 1 })
+  availableType: number;
 
   @Column({ default: 1 })
   attendantsNumber: number;

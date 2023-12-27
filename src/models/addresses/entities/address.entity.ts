@@ -1,36 +1,43 @@
 import { UserEntity } from 'src/models/users/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Address } from '../interface/address.interface';
 
 @Entity('addresses')
 export class AddressEntity implements Address {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column({ length: 100 })
-  street: string;
-
-  @Column({ length: 10 })
-  number: string;
-
-  @Column({ length: 100 })
-  complement: string;
-
-  @Column({ length: 100 })
-  neighborhood: string;
-
-  @Column({ length: 100 })
-  city: string;
-
-  @Column({ length: 100 })
-  state: string;
-
-  @Column({ length: 100 })
-  country: string;
-
-  @Column({ length: 100 })
+  @Column({ length: 100, nullable: false })
   zipcode: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.addresses)
+  @Column({ length: 100, nullable: false })
+  neighborhood: string;
+
+  @Column({ length: 100, nullable: false })
+  city: string;
+
+  @Column({ length: 100, nullable: false })
+  state: string;
+
+  @Column({ length: 100, nullable: false })
+  street: string;
+
+  @Column({ length: 10, nullable: false })
+  number: string;
+
+  @Column({ length: 100, nullable: true })
+  complement: string;
+
+  @Column({ length: 100, default: 'Brazil' })
+  country: string;
+
+  @Column({ length: 100, nullable: true })
+  latitude: string;
+
+  @Column({ length: 100, nullable: true })
+  longitude: string;
+
+  @OneToOne(() => UserEntity, (user) => user.id)
+  @JoinColumn({ name: 'userId' })
   user: UserEntity;
 }

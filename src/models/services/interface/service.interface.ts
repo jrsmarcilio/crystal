@@ -1,10 +1,10 @@
 export interface Service {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: string;
   currency: string;
   duration: number;
-  availableType: string;
+  availableType: number;
   attendantsNumber: number;
 }

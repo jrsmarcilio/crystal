@@ -1,91 +1,57 @@
 # Estrutura do Banco de Dados
 
 ## Tabelas
+---
 
-### Tabela `users`
-  - `id`: Identificador único do usuário
-  - `first_name`: Primeiro nome do usuário
-  - `last_name`: Último nome do usuário
-  - `email`: E-mail do usuário
-  - `mobile_number`: Número de telefone móvel do usuário
-  - `phone_number`: Número de telefone do usuário (fixo)
-  - `address_id`: Identificador único do endereço do usuário
-  - `notes`: Notas sobre o usuário
-  - `timezone`: Fuso horário do usuário
-  - `language`: Idioma do usuário
-  - `id_roles`: Identificador único do papel do usuário
+**Tabela: `users`**
 
-### Tabela `categories`
-  - `id`: Identificador único da categoria
-  - `name`: Nome da categoria
-  - `description`: Descrição da categoria
+A tabela `users` é responsável por armazenar dados relacionados aos usuários do sistema. Cada registro representa um usuário individual e inclui informações essenciais, como detalhes pessoais, informações de contato e dados relacionados ao gerenciamento do usuário.
 
-### Tabela `services`
-  - `id`: Identificador único do serviço
-  - `name`: Nome do serviço
-  - `description`: Descrição do serviço
-  - `category_id`: Identificador único da categoria do serviço
-  - `price`: Preço do serviço
-  - `currency`: Moeda do preço do serviço
-  - `duration`: Duração do serviço (em minutos)
-  - `availableType`: Tipo de disponibilidade do serviço
-  - `attendantsNumber`: Número de pessoas necessárias para atender o serviço
-  - `location_id`: Identificador único do local do serviço
+**Campos:**
+1. `email` (varchar(100)): O endereço de e-mail exclusivo associado ao usuário.
+2. `name` (varchar(100)): O nome do usuário.
+3. `picture` (varchar(100), opcional): Um caminho para a imagem de perfil do usuário.
+4. `birthday` (timestamp): A data de nascimento do usuário.
+5. `phone` (varchar(100)): O número de telefone do usuário.
+6. `blocked` (tinyint(4)): Indica se o usuário está bloqueado (0 para não bloqueado, 1 para bloqueado).
+7. `deleted` (tinyint(4)): Indica se o usuário foi excluído (0 para não excluído, 1 para excluído).
+8. `createdAt` (datetime(6)): A data e hora em que o registro do usuário foi criado.
+9. `updatedAt` (datetime(6)): A data e hora da última atualização do registro do usuário.
+10. `id` (varchar(36)): Identificador único do usuário (chave primária).
+11. `addressId` (varchar(36), opcional): Identificador único de um endereço associado ao usuário (chave estrangeira referenciando a tabela `addresses`).
 
-### Tabela `locations`
-  - `id`: Identificador único do local
-  - `name`: Nome do local
-  - `description`: Descrição do local
-  - `address_id`: Identificador único do endereço do local
+**Restrições e Índices:**
+- A chave primária é definida na coluna `id`.
+- A coluna `email` possui um índice único (`IDX_97672ac88f789774dd47f7c8be`).
+- A coluna `addressId` é uma chave estrangeira que referencia a coluna `id` na tabela `addresses`.
+--- 
 
-### Tabela `addresses`
-  - `id`: Identificador único do endereço
-  - `street`: Rua do endereço
-  - `number`: Número do endereço
-  - `complement`: Complemento do endereço
-  - `neighborhood`: Bairro do endereço
-  - `city`: Cidade do endereço
-  - `state`: Estado do endereço
-  - `country`: País do endereço
-  - `zipCode`: CEP do endereço
+**Tabela: `addresses`**
 
-### Tabela `appointments`
-  - `id`: Identificador único do agendamento
-  - `book_datetime`: Data e hora do agendamento
-  - `start_datetime`: Data e hora de início do agendamento
-  - `end_datetime`: Data e hora de término do agendamento
-  - `location`: Local do agendamento
-  - `notes`: Notas sobre o agendamento
-  - `hash`: Hash do agendamento
-  - `is_unavailable`: Indica se o agendamento é de indisponibilidade
-  - `id_users_provider`: Identificador único do usuário provedor do agendamento
-  - `id_users_customer`: Identificador único do usuário cliente do agendamento
-  - `id_services`: Identificador único do serviço do agendamento
-  - `id_google_calendar`: Identificador único do evento no Google Calendar
+A tabela `addresses` é responsável por armazenar informações relacionadas aos endereços associados aos usuários do sistema. Cada registro representa um endereço específico, com detalhes como rua, número, complemento, bairro, cidade, estado, país, código postal, coordenadas geográficas e a associação opcional com um usuário específico.
 
-### Tabela `roles`
-  - `id`: Identificador único do papel
-  - `name`: Nome do papel
-  - `slug`: Slug do papel
-  - `is_admin`: Indica se o papel é de administrador
-  - `appointments`: Permissão de agendamentos
-  - `customers`: Permissão de clientes
-  - `services`: Permissão de serviços
-  - `users`: Permissão de usuários
-  - `system_settings`: Permissão de configurações do sistema
-  - `user_settings`: Permissão de configurações do usuário
+**Campos:**
+1. `street` (varchar(100)): Nome da rua do endereço.
+2. `number` (varchar(10)): Número do endereço.
+3. `complement` (varchar(100), opcional): Informações adicionais sobre o endereço.
+4. `neighborhood` (varchar(100)): Nome do bairro do endereço.
+5. `city` (varchar(100)): Nome da cidade do endereço.
+6. `state` (varchar(100)): Nome do estado ou província do endereço.
+7. `country` (varchar(100), padrão 'Brazil'): Nome do país do endereço.
+8. `zipcode` (varchar(100)): Código postal do endereço.
+9. `latitude` (varchar(100), opcional): Coordenada de latitude do endereço.
+10. `longitude` (varchar(100), opcional): Coordenada de longitude do endereço.
+11. `userId` (varchar(36), opcional): Identificador único do usuário associado a este endereço (chave estrangeira referenciando a tabela `users`).
+12. `id` (varchar(36)): Identificador único do endereço (chave primária).
 
-### Tabela `user_settings`
-  - `id_users`: Identificador único do usuário
-  - `username`: Nome de usuário
-  - `password`: Senha do usuário
-  - `salt`: Salt da senha do usuário
-  - `working_plan`: Plano de trabalho do usuário
-  - `working_plan_exceptions`: Exceções do plano de trabalho do usuário
-  - `notifications`: Notificações do usuário
-  - `google_sync`: Sincronização com o Google
-  - `google_token`: Token do Google
-  - `google_calendar`: Calendário do Google
-  - `sync_past_days`: Dias passados a serem sincronizados
-  - `sync_future_days`: Dias futuros a serem sincronizados
-  - `calendar_view`: Visualização do calendário
+**Restrições e Índices:**
+- A chave primária é definida na coluna `id`.
+- A coluna `userId` possui um índice único (`REL_95c93a584de49f0b0e13f75363`).
+- A coluna `userId` é uma chave estrangeira que referencia a coluna `id` na tabela `users`.
+
+**Observações:**
+- A tabela permite a associação opcional de um endereço a um usuário através do campo `userId`.
+- Os campos de coordenadas geográficas (`latitude` e `longitude`) permitem armazenar a localização exata do endereço, se disponível.
+- O país padrão é definido como 'Brazil'.
+- A tabela suporta a integridade referencial, garantindo que um endereço não seja associado a um usuário inexistente.
+---
