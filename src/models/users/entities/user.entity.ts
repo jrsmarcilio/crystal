@@ -51,6 +51,6 @@ export class UserEntity implements User {
   @OneToOne(() => RoleEntity, (role) => role.user)
   role: RoleEntity;
 
-  @OneToOne(() => UserSettingsEntity, (userSettings) => userSettings.user)
+  @OneToOne(() => UserSettingsEntity, (userSettings) => userSettings.id)
   settings: UserSettingsEntity;
 }

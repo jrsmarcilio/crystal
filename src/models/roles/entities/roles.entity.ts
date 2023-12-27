@@ -40,7 +40,7 @@ export class RoleEntity implements Role {
   @Column({ default: false })
   user_settings: boolean;
 
-  @ManyToOne(() => UserEntity, (user) => user.roles)
+  @ManyToOne(() => UserEntity, (user) => user.role)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 }
