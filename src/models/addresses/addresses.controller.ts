@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Unprotected } from 'nest-keycloak-connect';
 import { AddressesService } from './addresses.service';
 import { AddressEntity } from './entities/address.entity';
 
@@ -8,6 +9,7 @@ export class AddressesController {
   constructor(private readonly addressesService: AddressesService) { }
 
   @Get('zipcode/:zipcode')
+  @Unprotected()
   async findByZipcode(@Param('zipcode') zipcode: string, @Req() req: Request, @Res() res: Response): Promise<Response> {
     const addresses = await this.addressesService.findByZipcode(zipcode);
     return res.status(200).json(addresses);

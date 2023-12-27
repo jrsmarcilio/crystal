@@ -1,4 +1,6 @@
 import mysqlConfig, { IMysqlConfig } from './database/mysql/mysql.config';
+import keycloakConfig, { IKeycloakConfig } from './keycloak/keycloak.config';
 import serverConfig, { IServerConfig } from './server/server.config';
 
-export { IMysqlConfig, IServerConfig, mysqlConfig, serverConfig };
+export { IKeycloakConfig, IMysqlConfig, IServerConfig, keycloakConfig, mysqlConfig, serverConfig };
+
